@@ -4,10 +4,11 @@ Represents a student enrolled in the college
 
 class Book:
 
-    def __init__(self, bookID, title, author):
+    def __init__(self, bookID, title, author, genre):
         self._bookID = bookID
         self._title = title
         self._author = author
+        self._genre = genre
 
     def getBookID(self):
         return self._bookID
@@ -17,5 +18,12 @@ class Book:
 
     def getAuthor(self):
         return self._author
+
+    def getGenre(self):
+        return self._genre
+
+    # override object.__str__
+    def __str__(self):
+        return f"{self.getBookID()},{self.getTitle()},{self.getAuthor()},{self.getGenre()}"
 
     
