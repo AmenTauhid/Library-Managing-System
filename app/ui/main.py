@@ -3,11 +3,13 @@ import os
 import sys
 import time
 from app.entities.bookDataManager import BookDataManager
+from app.dataAccess.bookJsonManager import BookJsonManager
 class MainUI:
     dataManager = BookDataManager()
+    jsonManager = BookJsonManager("books.json")
     @classmethod
     def run(cls):
-
+        cls.dataManager._dict = cls.jsonManager.readFromFile()
         os.system("cls")
         print("========= Welcome to the Library =========")
         print("1)Display all books with there details")
@@ -52,3 +54,4 @@ class MainUI:
                     sys.exit()
                 else:
                     n = str(input("Invalid Choice...!!!\nPlease enter a valid option:")) 
+            cls.jsonManager.writeToFile(cls.dataManager._dict)

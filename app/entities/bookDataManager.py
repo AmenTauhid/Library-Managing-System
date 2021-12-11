@@ -1,7 +1,7 @@
 """
 Manages a collection of books
 """
-import book
+from app.entities.book import Book
 import pandas as pd
 from IPython.display import display
 import json
@@ -19,7 +19,7 @@ class BookDataManager:
         # add book record to the collection
         if bookID in self._dict:
             raise DuplicatebookError()
-        self._dict[bookID] = book.Book(
+        self._dict[bookID] = Book(
             bookID, title, author, genre)
 
     def removebookRecord(self,bookID):
@@ -45,7 +45,7 @@ class BookDataManager:
     def modifybookRecord(self,bookID,title,author, genre):
         # modify a record based on key
         if bookID in self._dict:
-            self._dict[bookID] = book.Book(
+            self._dict[bookID] = Book(
             bookID, title, author, genre)
         else :
             raise Exception
