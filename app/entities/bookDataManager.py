@@ -1,11 +1,12 @@
 """
 Manages a collection of books
 """
+from app.dataAccess.bookJsonManager import BookJsonManager
 from app.entities.book import Book
 import pandas as pd
 from IPython.display import display
 import json
-class DuplicatebookError (Exception):
+class DuplicatebookError(Exception):
     pass
 
 
@@ -37,23 +38,36 @@ class BookDataManager:
         else:
             raise Exception
 
-    def searchbookGenre(self,genre):
-        # search for a book record
-        if genre in self._dict:
-            temp = self._dict[genre]
-            display(temp)
-        else:
-            raise Exception
-
+    '''
     def displayAllRecord(self):
         for bookID in self._dict:
             temp = self._dict[bookID]
             display(temp)
+    '''
+    def displayAllRecord(self):
+        fd = open("books.json",'r')
+        txt = fd.read()
+        data = json.loads(txt)
+
+        table = pd.DataFrame(
+			columns=['BookID', 'title', 'author','genre'])
+        for i in data.keys():
+            temp = pd.DataFrame(columns=["BookID"])
+            temp["BookID"] = [i]
+            for j in data[i].keys():
+                temp[j] = [data[i][j]]
+            table = table.append(temp)
+        table = table.reset_index(drop=True)
+        display(table)
 
     def modifybookRecord(self,bookID,title,author, genre):
         # modify a record based on key
         if bookID in self._dict:
             self._dict[bookID] = Book(
             bookID, title, author, genre)
-        else :
-            raise Exception
+            return True
+        else:
+            return False
+
+            
+            
