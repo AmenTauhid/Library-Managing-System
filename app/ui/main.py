@@ -2,8 +2,9 @@
 import os
 import sys
 import time
+from app.entities.bookDataManager import BookDataManager
 class MainUI:
-
+    dataManager = BookDataManager()
     @classmethod
     def run(cls):
 
@@ -21,27 +22,29 @@ class MainUI:
             l1 = ["1","2","3","4","5","6"]
             while n != l1:
                 if (n == "1"):
-                    pass
+                    cls.dataManager.displayAllRecord()
                     break
                 elif (n == "2"):
                     bookID = int(input('Enter the ID of the book: '))
-                    pass
+                    cls.dataManager.searchbookRecord(bookID)
                     break
                 elif (n == "3"):
                     bookID = int(input('Enter the student no: '))
                     title = input('Enter the title: ')
                     author = input('Enter the name of the author: ')
-                    pass
+                    genre = input('Enter the genre:')
+                    cls.dataManager.addbookRecord(bookID,title,author,genre)
                     break
                 elif (n == "4"):
                     bookID = int(input('Enter the ID: '))
                     title = input('Enter the  title: ')
                     author = input('Enter the author name: ')
-                    pass
+                    genre = input('Enter the genre:')
+                    cls.dataManager.modifybookRecord(bookID,title,author,genre)
                     break
                 elif (n == "5"):
                     bookID = int(input('Enter the ID of the book you wish to remove:'))
-                    pass
+                    cls.dataManager.removebookRecord(bookID)
                     break
                 elif (n == "6"):
                     print("Thank you for using the libray system")

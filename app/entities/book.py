@@ -26,4 +26,13 @@ class Book:
     def __str__(self):
         return f"{self.getBookID()},{self.getTitle()},{self.getAuthor()},{self.getGenre()}"
 
-    
+    '''
+    @staticmethod
+    def parse(studentAsString):
+        fields = studentAsString.split(',')
+        bookID = int(fields[0])
+        title = fields[1]
+        author = fields[2]
+        # return a Student instance created using the CSV
+        return Book(bookID, title, author)
+    '''
