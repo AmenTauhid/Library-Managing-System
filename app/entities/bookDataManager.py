@@ -22,7 +22,7 @@ class BookDataManager:
         self._dict[bookID] = Book(
             bookID, title, author, genre)
 
-    def preAddCheck(self,bookId):
+    def preCheck(self,bookId):
         if bookId in self._dict:
             return True
         else: 
@@ -73,6 +73,7 @@ class BookDataManager:
             return True
         else:
             return False
+
 
             
             

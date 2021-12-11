@@ -36,16 +36,7 @@ class MainUI:
                 elif (n == "3"):
                     MainUI.addABook()
                 elif (n == "4"):
-                    bookID = int(input('Enter the ID of the book you wish to modify: '))
-                    title = input('Enter the  title: ')
-                    author = input('Enter the author name: ')
-                    genre = input('Enter the genre:')
-                    cls.dataManager.modifybookRecord(bookID,title,author,genre)
-                    if cls.dataManager.modifybookRecord(bookID,title,author,genre) is True:
-                        print("Book with ID",bookID,"modified successfully!\n")
-                        break
-                    elif cls.dataManager.modifybookRecord(bookID,title,author,genre) is False:
-                        print("Given ID of the book does not exist in the library!")
+                    MainUI.updateBook()
                 elif (n == "5"):
                     MainUI.deleteBook()
                 elif (n == "6"):
@@ -63,22 +54,26 @@ class MainUI:
         choice = str(input("\nHow do you wish to search for the book?\n1)ID of the book\n2)Genre of the book\n3)Go Back\n>"))
         l2 = ["1","2","3"]
         while choice != l2:
-            if (choice == "1"):
-                bookID = int(input('\nEnter the ID of the book\n>'))
-                print('')
-                cls.dataManager.searchbookID(bookID)
+            try:
+                if (choice == "1"):
+                    bookID = int(input('\nEnter the ID of the book\n>'))
+                    print('')
+                    cls.dataManager.searchbookID(bookID)
+                    break
+                elif choice=="2":
+                    #genre = str(input("\nEnter the genre of the book you wish to search for\n>"))
+                    #print('')
+                    #cls.dataManager.searchbookGenre(genre)
+                    #break
+                    pass
+                elif choice=="3":
+                    MainUI.run()
+                else:
+                    raise ValueError
+            except ValueError as e:
+                e = ValueError("\nInvalid input/Inavlid ID\n")
+                print(e)
                 break
-            elif choice=="2":
-                #genre = str(input("\nEnter the genre of the book you wish to search for\n>"))
-                #print('')
-                #cls.dataManager.searchbookGenre(genre)
-                #break
-                pass
-            elif choice=="3":
-                MainUI.run()
-            else:
-                choice = str(input("\nInvalid Choice...!!!\nPlease enter a valid option\n>"))
-    
     @classmethod
     def deleteBook(cls):
         cls.dataManager._dict = cls.jsonManager.readFromFile()
@@ -99,21 +94,54 @@ class MainUI:
     def addABook(cls):
         cls.dataManager._dict = cls.jsonManager.readFromFile()
         while True:
-            bookID = int(input('Enter a new ID for the book or enter 0 if you want to go back\n>'))
-            if bookID > 0:
-                if cls.dataManager.preAddCheck(bookID) is False:
-                    title = input('Enter the title: ')
-                    author = input('Enter the name of the author: ')
-                    genre = input('Enter the genre:')
-                    cls.dataManager.addbookRecord(bookID,title,author,genre)
-                    print("\nNew book with ID",bookID,"added to the library successfully!\n")
-                    time.sleep(1.5)
-                    break
-                elif cls.dataManager.preAddCheck(bookID) is True:
-                    print("\nEntered ID of the book already exists!\nPlease choose a new one\n")
-                    break
-            elif bookID == 0:
-                MainUI.run()
-            else:
-                bookID = int(input('Please enter a valid ID/option: '))
+            try:
+                bookID = int(input('Enter a new ID for the book or enter 0 if you want to go back\n>'))
+                if bookID > 0:
+                    if cls.dataManager.preCheck(bookID) is False:
+                        title = input('Enter the title: ')
+                        author = input('Enter the name of the author: ')
+                        genre = input('Enter the genre:')
+                        cls.dataManager.addbookRecord(bookID,title,author,genre.lower())
+                        print("\nNew book with ID",bookID,"added to the library successfully!\n")
+                        time.sleep(1.5)
+                        break
+                    elif cls.dataManager.preCheck(bookID) is True:
+                        print("\nEntered ID of the book already exists!\nPlease choose a new one\n")
+                        break
+                    else:
+                        raise ValueError
+                elif bookID == 0:
+                    MainUI.run()
+            except ValueError as e:
+                e = ValueError("\nInvalid input/Inavlid ID\n")
+                print(e)
+                break
         cls.jsonManager.writeToFile(cls.dataManager._dict)
+    
+    @classmethod
+    def updateBook(cls):
+        cls.dataManager._dict = cls.jsonManager.readFromFile()
+        while True:
+            try:
+                bookID = int(input('Enter a new ID for the book or enter 0 if you want to go back\n>'))
+                if bookID > 0:
+                    if cls.dataManager.preCheck(bookID) is True:
+                        title = input('Enter the  title: ')
+                        author = input('Enter the author name: ')
+                        genre = input('Enter the genre:')
+                        cls.dataManager.modifybookRecord(bookID,title,author,genre.lower())
+                        print("Book with ID",bookID,"modified successfully!\n")
+                        break
+                    elif cls.dataManager.preCheck(bookID) is False:
+                        print("Given ID of the book does not exist in the library!\nPlease enter a valid one\n")
+                        break
+                    else:
+                        raise ValueError
+                elif bookID == 0:
+                    MainUI.run()
+            except ValueError as e:
+                e = ValueError("\nInvalid input/Inavlid ID\n")
+                print(e)
+                break
+        cls.jsonManager.writeToFile(cls.dataManager._dict)
+        
