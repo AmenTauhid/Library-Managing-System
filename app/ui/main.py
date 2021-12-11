@@ -110,7 +110,7 @@ class MainUI:
                     time.sleep(1.5)
                     break
                 elif cls.dataManager.preAddCheck(bookID) is True:
-                    print("Entered ID of the book already exists!\nPlease choose a new one\n>")
+                    print("\nEntered ID of the book already exists!\nPlease choose a new one\n")
                     break
             elif bookID == 0:
                 MainUI.run()
