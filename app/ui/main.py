@@ -34,14 +34,7 @@ class MainUI:
                 elif (n == "2"):
                     MainUI.searchingBook()
                 elif (n == "3"):
-                    bookID = int(input('Enter a new ID for the book: '))
-                    title = input('Enter the title: ')
-                    author = input('Enter the name of the author: ')
-                    genre = input('Enter the genre:')
-                    cls.dataManager.addbookRecord(bookID,title,author,genre)
-                    print("New book with ID",bookID,"added to the library successfully!\n")
-                    time.sleep(1.5)
-                    break
+                    MainUI.addABook()
                 elif (n == "4"):
                     bookID = int(input('Enter the ID of the book you wish to modify: '))
                     title = input('Enter the  title: ')
@@ -84,7 +77,7 @@ class MainUI:
             elif choice=="3":
                 MainUI.run()
             else:
-                n = str(input("\nInvalid Choice...!!!\nPlease enter a valid option\n>"))
+                choice = str(input("\nInvalid Choice...!!!\nPlease enter a valid option\n>"))
     
     @classmethod
     def deleteBook(cls):
@@ -102,3 +95,25 @@ class MainUI:
                 bookID = int(input("Invalid ID/option...!!!\nPlease enter a valid option\n>"))
         cls.jsonManager.writeToFile(cls.dataManager._dict)
         
+    @classmethod
+    def addABook(cls):
+        cls.dataManager._dict = cls.jsonManager.readFromFile()
+        while True:
+            bookID = int(input('Enter a new ID for the book or enter 0 if you want to go back\n>'))
+            if bookID > 0:
+                if cls.dataManager.preAddCheck(bookID) is False:
+                    title = input('Enter the title: ')
+                    author = input('Enter the name of the author: ')
+                    genre = input('Enter the genre:')
+                    cls.dataManager.addbookRecord(bookID,title,author,genre)
+                    print("\nNew book with ID",bookID,"added to the library successfully!\n")
+                    time.sleep(1.5)
+                    break
+                elif cls.dataManager.preAddCheck(bookID) is True:
+                    print("Entered ID of the book already exists!\nPlease choose a new one\n>")
+                    break
+            elif bookID == 0:
+                MainUI.run()
+            else:
+                bookID = int(input('Please enter a valid ID/option: '))
+        cls.jsonManager.writeToFile(cls.dataManager._dict)

@@ -16,12 +16,17 @@ class BookDataManager:
     def __init__(self):
         self._dict = {}  # using a blank dictionary to hold book records
 
+
     def addbookRecord(self, bookID, title, author, genre):
         # add book record to the collection
-        if bookID in self._dict:
-            raise DuplicatebookError()
         self._dict[bookID] = Book(
             bookID, title, author, genre)
+
+    def preAddCheck(self,bookId):
+        if bookId in self._dict:
+            return True
+        else: 
+            return False
 
     def removebookRecord(self,bookID):
         # remove book record from collection
