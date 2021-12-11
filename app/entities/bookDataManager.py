@@ -29,10 +29,18 @@ class BookDataManager:
         else:
             raise Exception
 
-    def searchbookRecord(self,bookID):
+    def searchbookID(self,bookID):
         # search for a book record
         if bookID in self._dict:
             temp = self._dict[bookID]
+            display(temp)
+        else:
+            raise Exception
+
+    def searchbookGenre(self,genre):
+        # search for a book record
+        if genre in self._dict:
+            temp = self._dict[genre]
             display(temp)
         else:
             raise Exception

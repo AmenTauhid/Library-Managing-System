@@ -27,18 +27,16 @@ class MainUI:
                     cls.dataManager.displayAllRecord()
                     break
                 elif (n == "2"):
-                    bookID = int(input('Enter the ID of the book: '))
-                    cls.dataManager.searchbookRecord(bookID)
-                    break
+                    MainUI.searchingBook()
                 elif (n == "3"):
-                    bookID = int(input('Enter the student no: '))
+                    bookID = int(input('Enter a new ID for the book: '))
                     title = input('Enter the title: ')
                     author = input('Enter the name of the author: ')
                     genre = input('Enter the genre:')
                     cls.dataManager.addbookRecord(bookID,title,author,genre)
                     break
                 elif (n == "4"):
-                    bookID = int(input('Enter the ID: '))
+                    bookID = int(input('Enter the ID of the book you wish to modify: '))
                     title = input('Enter the  title: ')
                     author = input('Enter the author name: ')
                     genre = input('Enter the genre:')
@@ -55,3 +53,22 @@ class MainUI:
                 else:
                     n = str(input("Invalid Choice...!!!\nPlease enter a valid option:")) 
             cls.jsonManager.writeToFile(cls.dataManager._dict)
+
+    @classmethod
+    def searchingBook(cls):
+        cls.dataManager._dict = cls.jsonManager.readFromFile()
+        choice = str(input("How do you wish to search for the book?\n1)ID of the book\n2)Genre of the book\n3)Go Back\n>"))
+        l2 = ["1","2","3"]
+        while choice != l2:
+            if (choice == "1"):
+                bookID = int(input('Enter the ID of the book\n>'))
+                cls.dataManager.searchbookID(bookID)
+                break
+            elif choice=="2":
+                genre = str(input("Enter the genre of the book you wish to search for\n>"))
+                cls.dataManager.searchbookGenre(genre)
+                break
+            elif choice=="3":
+                MainUI.run()
+            else:
+                n = str(input("Invalid Choice...!!!\nPlease enter a valid option\n>"))

@@ -6,9 +6,11 @@ Responsible for saving/reading book records as JSON
 """
 from app.entities.book import Book
 import json
+import collections
 
 
 class BookJsonManager:
+
 
     def __init__(self, fileName):
         self._fileName = fileName
@@ -29,7 +31,8 @@ class BookJsonManager:
         bookDict: the dictionary containing studnet records to be saved
         """
         with open(self._fileName, "w") as fileRef:
-            json.dump(bookDict, fileRef, default=BookJsonManager.toJson)
+            od = collections.OrderedDict(sorted(bookDict.items()))
+            json.dump(od, fileRef, default=BookJsonManager.toJson)
 
     def readFromFile(self):
         # start with a blank dictionary
