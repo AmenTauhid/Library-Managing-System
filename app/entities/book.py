@@ -34,5 +34,4 @@ class Book:
         title = fields[1]
         author = fields[2]
         genre = fields[3]
-        # return a Student instance created using the CSV
         return Book(bookID, title, author,genre)

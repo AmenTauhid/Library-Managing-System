@@ -1,6 +1,3 @@
-#with open(r"D:\College resources\PROG10004\Source Files\Assignment 4\books.json", "w") as f:
- #   pass
-
 """
 Responsible for saving/reading book records as JSON
 """

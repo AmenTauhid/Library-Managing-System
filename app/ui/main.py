@@ -57,9 +57,16 @@ class MainUI:
             try:
                 if (choice == "1"):
                     bookID = int(input('\nEnter the ID of the book\n>'))
-                    print('')
-                    cls.dataManager.searchbookID(bookID)
-                    break
+                    if cls.dataManager.preCheck(bookID) is True:
+                        print('')
+                        print("Fetching the list...\n")
+                        time.sleep(1)
+                        cls.dataManager.searchbookID(bookID)
+                        time.sleep(1)
+                        break
+                    elif cls.dataManager.preCheck(bookID) is False:
+                        print("\nEntered ID of the book does not exist!\nPlease enter a valid one\n")
+                        break
                 elif choice=="2":
                     #genre = str(input("\nEnter the genre of the book you wish to search for\n>"))
                     #print('')
@@ -71,23 +78,30 @@ class MainUI:
                 else:
                     raise ValueError
             except ValueError as e:
-                e = ValueError("\nInvalid input/Inavlid ID\n")
+                e = ValueError("\nInvalid input/Inavlid ID")
                 print(e)
+                time.sleep(1)
                 break
     @classmethod
     def deleteBook(cls):
         cls.dataManager._dict = cls.jsonManager.readFromFile()
-        bookID = int(input('Enter the ID of the book you wish to remove or if you want to go back enter 0\n>'))
         while True:
-            if bookID != 0:
-                cls.dataManager.removebookRecord(bookID)
-                print("Book with ID",bookID,"removed from the library successfully!\n")
-                time.sleep(1.5)
-                break
-            elif bookID == 0: 
-                MainUI.run()
-            else:
-                bookID = int(input("Invalid ID/option...!!!\nPlease enter a valid option\n>"))
+            try:
+                bookID = int(input('Enter the ID of the book you wish to remove or if you want to go back enter 0\n>'))
+                if bookID > 0:
+                    if cls.dataManager.preCheck(bookID) is True:
+                        cls.dataManager.removebookRecord(bookID)
+                        print("Book with ID",bookID,"removed from the library successfully!\n")
+                        time.sleep(1.5)
+                        break
+                    else:
+                        raise ValueError
+                elif bookID == 0: 
+                    MainUI.run()
+            except ValueError as e:
+                e = ValueError("\nInvalid input/Invalid ID\n")
+                time.sleep(1)
+                print(e)
         cls.jsonManager.writeToFile(cls.dataManager._dict)
         
     @classmethod
@@ -115,6 +129,7 @@ class MainUI:
             except ValueError as e:
                 e = ValueError("\nInvalid input/Inavlid ID\n")
                 print(e)
+                time.sleep(1)
                 break
         cls.jsonManager.writeToFile(cls.dataManager._dict)
     
@@ -142,6 +157,7 @@ class MainUI:
             except ValueError as e:
                 e = ValueError("\nInvalid input/Inavlid ID\n")
                 print(e)
+                time.sleep(1)
                 break
         cls.jsonManager.writeToFile(cls.dataManager._dict)
         
