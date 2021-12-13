@@ -1,7 +1,6 @@
 """
 Manages a collection of books
 """
-from app.dataAccess.bookJsonManager import BookJsonManager
 from app.entities.book import Book
 import pandas as pd
 from IPython.display import display 
