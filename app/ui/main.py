@@ -138,10 +138,10 @@ class MainUI:
         cls.dataManager._dict = cls.jsonManager.readFromFile()
         while True:
             try:
-                bookID = int(input('Enter a new ID for the book or enter 0 if you want to go back\n>'))
+                bookID = int(input('Enter a the ID for the book you wish to update or enter 0 if you want to go back\n>'))
                 if bookID > 0:
                     if cls.dataManager.preCheck(bookID) is True:
-                        title = input('Enter the  title: ')
+                        title = input('Enter the 1title: ')
                         author = input('Enter the author name: ')
                         genre = input('Enter the genre:')
                         cls.dataManager.modifybookRecord(bookID,title,author,genre.lower())

@@ -28,8 +28,8 @@ class Book:
 
     
     @staticmethod
-    def parse(studentAsString):
-        fields = studentAsString.split(',')
+    def parse(bookAsString):
+        fields = bookAsString.split(',')
         bookID = int(fields[0])
         title = fields[1]
         author = fields[2]

@@ -12,7 +12,7 @@ class BookDataManager:
     def __init__(self):
         self._dict = {}  
 
-    def addbookRecord(self, bookID, title, author, genre):
+    def addBookRecord(self, bookID, title, author, genre):
         self._dict[bookID] = Book(
             bookID, title, author, genre)
 
@@ -22,10 +22,10 @@ class BookDataManager:
         else: 
             return False
 
-    def removebookRecord(self,bookID):
+    def removeBookRecord(self,bookID):
         self._dict.pop(bookID)
 
-    def searchbookID(self,bookID):
+    def searchBookID(self,bookID):
         temp = self._dict[bookID]
         display(temp)
 
@@ -51,7 +51,7 @@ class BookDataManager:
         table = table.reset_index(drop=True)
         display(table)
 
-    def modifybookRecord(self,bookID,title,author, genre):
+    def modifyBookRecord(self,bookID,title,author, genre):
         # modify a record based on key
         self._dict[bookID] = Book(
         bookID, title, author, genre)
