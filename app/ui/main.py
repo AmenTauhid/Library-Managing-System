@@ -61,7 +61,7 @@ class MainUI:
                         print('')
                         print("Fetching the list...\n")
                         time.sleep(1)
-                        cls.dataManager.searchbookID(bookID)
+                        cls.dataManager.searchBookID(bookID)
                         time.sleep(1)
                         break
                     elif cls.dataManager.preCheck(bookID) is False:
@@ -90,7 +90,7 @@ class MainUI:
                 bookID = int(input('Enter the ID of the book you wish to remove or if you want to go back enter 0\n>'))
                 if bookID > 0:
                     if cls.dataManager.preCheck(bookID) is True:
-                        cls.dataManager.removebookRecord(bookID)
+                        cls.dataManager.removeBookRecord(bookID)
                         print("Book with ID",bookID,"removed from the library successfully!\n")
                         time.sleep(1.5)
                         break
@@ -115,7 +115,7 @@ class MainUI:
                         title = input('Enter the title: ')
                         author = input('Enter the name of the author: ')
                         genre = input('Enter the genre:')
-                        cls.dataManager.addbookRecord(bookID,title,author,genre.lower())
+                        cls.dataManager.addBookRecord(bookID,title,author,genre.lower())
                         print("\nNew book with ID",bookID,"added to the library successfully!\n")
                         time.sleep(1.5)
                         break
@@ -144,7 +144,7 @@ class MainUI:
                         title = input('Enter the 1title: ')
                         author = input('Enter the author name: ')
                         genre = input('Enter the genre:')
-                        cls.dataManager.modifybookRecord(bookID,title,author,genre.lower())
+                        cls.dataManager.modifyBookRecord(bookID,title,author,genre.lower())
                         print("Book with ID",bookID,"modified successfully!\n")
                         break
                     elif cls.dataManager.preCheck(bookID) is False:
